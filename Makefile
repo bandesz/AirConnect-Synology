@@ -14,7 +14,7 @@ AirConnect-${VERSION}.spk:
 	tar -czf AirConnect-${VERSION}.spk *
 
 .PHONY: build
-build: package.tgz AirConnect-${VERSION}.spk LICENSE
+build: package.tgz LICENSE AirConnect-${VERSION}.spk
 	@echo
 	@echo "Build complete, install AirConnect-${VERSION}.spk through the Package Center"
 
