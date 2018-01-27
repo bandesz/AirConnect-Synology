@@ -3,6 +3,8 @@
 A minimal Synology 1.1 package for [AirConnect](https://github.com/philippe44/AirConnect
 ). It's tested on Synology RT2600.
 
+It allows you to use AirPlay to stream to UPnP/Sonos devices.
+
 Currently it only runs the airupnp process with the following options:
 
 ```

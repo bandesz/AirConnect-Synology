@@ -1,5 +1,5 @@
 package="AirConnect"
-description="Use AirPlay to stream to UPnP/Sonos & Chromecast devices"
+description="Use AirPlay to stream to UPnP/Sonos"
 maintainer="philippe44"
 adminport=49154
 adminurl=web
