@@ -1,17 +1,23 @@
+REPO_REVISION=360408fb0de31b26c50c67ae8bda1940c2ece71c
+VERSION=0.1.6.1
+
 LICENSE:
-	curl -L https://github.com/philippe44/AirConnect/raw/master/LICENSE -O
+	curl -s -L https://github.com/philippe44/AirConnect/raw/${REPO_REVISION}/LICENSE -O
 
 package.tgz:
-	curl -L https://github.com/philippe44/AirConnect/raw/master/bin/airupnp-arm -O
+	curl -s -L https://github.com/philippe44/AirConnect/raw/${REPO_REVISION}/bin/airupnp-arm -O
+	chmod +x airupnp-arm
 	tar czf package.tgz airupnp-arm
 	rm airupnp-arm
 
-AirConnect.spk:
-	tar -czf AirConnect.spk *
+AirConnect-${VERSION}.spk:
+	tar -czf AirConnect-${VERSION}.spk *
 
 .PHONY: build
-build: package.tgz AirConnect.spk LICENSE
+build: package.tgz AirConnect-${VERSION}.spk LICENSE
+	@echo
+	@echo "Build complete, install AirConnect-${VERSION}.spk through the Package Manager"
 
 .PHONY: clean
 clean:
-	rm -f package.tgz AirConnect.spk LICENSE
+	rm -f package.tgz AirConnect*.spk LICENSE

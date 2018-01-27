@@ -16,5 +16,3 @@ For license information please see https://github.com/philippe44/AirConnect/blob
 ```
 make clean build
 ```
-
-Then install the AirConnect.spk through the Package Manager.
