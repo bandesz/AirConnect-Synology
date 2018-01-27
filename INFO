@@ -1,7 +1,8 @@
 package="AirConnect"
+version=0.1.6.1
 description="Use AirPlay to stream to UPnP/Sonos"
 maintainer="philippe44"
-firmware=5.2-6931
-helpurl="https://github.com/bandesz/AirConnect-SynologyRouter"
-version=0.1.6.1
-arch="ipq806x"
+maintainer_url="https://github.com/philippe44/AirConnect"
+distributor="bandesz"
+distributor_url="https://github.com/bandesz/AirConnect-SynologyRouter"
+arch="ipq806x armada370 armadaxp armada375 armada38x alpine alpine4k monaco comcerto2k"

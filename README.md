@@ -1,7 +1,7 @@
-# AirConnect package for Synology routers
+# AirConnect package for Synology NAS and Synology Router
 
-A minimal Synology 1.1 package for [AirConnect](https://github.com/philippe44/AirConnect
-). It's tested on Synology RT2600.
+A minimal Synology package for [AirConnect](https://github.com/philippe44/AirConnect
+).
 
 It allows you to use AirPlay to stream to UPnP/Sonos devices.
 
@@ -12,6 +12,10 @@ airupnp-arm -b [router local ip]:49154 -z -l 1000:2000 -f /tmp/airupnp-arm.log -
 ```
 
 The process is running with a low-privilege user.
+
+## Tested devices
+
+* Synology RT2600 router
 
 ## Build
 
