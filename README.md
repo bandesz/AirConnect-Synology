@@ -1,21 +1,25 @@
 # AirConnect package for Synology NAS and Synology Router
 
 A minimal Synology package for [AirConnect](https://github.com/philippe44/AirConnect
-).
+). It allows you to use AirPlay to stream to UPnP/Sonos devices.
 
-It allows you to use AirPlay to stream to UPnP/Sonos devices.
+Currently it is built only for ARMv7 architectures: ipq806x armada370 armadaxp armada375 armada38x alpine alpine4k monaco comcerto2k.
 
-Currently it only runs the airupnp process with the following options:
+You can check which architecture you have [here](https://www.synology.com/en-uk/knowledgebase/DSM/tutorial/General/What_kind_of_CPU_does_my_NAS_have).
+
+## Tested devices
+
+* Synology RT2600 router
+
+## How it works
+
+It runs the airupnp-arm process with the following options:
 
 ```
 airupnp-arm -b [router local ip]:49154 -z -l 1000:2000 -f /tmp/airupnp-arm.log -d all=error
 ```
 
 The process is running with a low-privilege user.
-
-## Tested devices
-
-* Synology RT2600 router
 
 ## Build
 
