@@ -18,3 +18,8 @@ For license information please see https://github.com/philippe44/AirConnect/blob
 ```
 make clean build
 ```
+
+## Debugging
+
+You can see the error logs by going to the Package Center and clicking **View Log** on the package's page.
+If you want to see more logs then change the start command in scripts/start-stop-status and rebuild the package, then install it again.

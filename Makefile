@@ -16,7 +16,7 @@ AirConnect-${VERSION}.spk:
 .PHONY: build
 build: package.tgz AirConnect-${VERSION}.spk LICENSE
 	@echo
-	@echo "Build complete, install AirConnect-${VERSION}.spk through the Package Manager"
+	@echo "Build complete, install AirConnect-${VERSION}.spk through the Package Center"
 
 .PHONY: clean
 clean:
