@@ -1,0 +1,9 @@
+package="AirConnect"
+description="Use AirPlay to stream to UPnP/Sonos & Chromecast devices"
+maintainer="philippe44"
+adminport=49154
+adminurl=web
+firmware=5.2-6931
+helpurl="https://github.com/philippe44/AirConnect"
+version=1.6.1
+arch="ipq806x"
