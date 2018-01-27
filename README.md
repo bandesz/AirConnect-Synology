@@ -11,7 +11,7 @@ Currently it only runs the airupnp process with the following options:
 airupnp-arm -b [router local ip]:49154 -z -l 1000:2000 -f /tmp/airupnp-arm.log -d all=error
 ```
 
-For license information please see https://github.com/philippe44/AirConnect/blob/master/LICENSE.
+The process is running with a low-privilege user.
 
 ## Build
 
@@ -23,3 +23,7 @@ make clean build
 
 You can see the error logs by going to the Package Center and clicking **View Log** on the package's page.
 If you want to see more logs then change the start command in scripts/start-stop-status and rebuild the package, then install it again.
+
+## License
+
+See https://github.com/philippe44/AirConnect/blob/master/LICENSE.
