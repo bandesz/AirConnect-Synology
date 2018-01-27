@@ -4,7 +4,9 @@ AIRCONNECT_DIR="/var/packages/AirConnect/target"
 
 start_airconnect ()
 {
-    ${AIRCONNECT_DIR}/airupnp-arm -b 10.1.14.1:49154 -z -l 1000:2000 -f /tmp/airupnp-arm.log -d all=error
+    IP=$(/sbin/ifconfig lbr0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')
+    PORT=49154
+    ${AIRCONNECT_DIR}/airupnp-arm -b ${IP}:${PORT} -z -l 1000:2000 -f /tmp/airupnp-arm.log -d all=error
 }
 
 stop_airconnect ()
@@ -44,6 +46,7 @@ case $1 in
         fi
         ;;
     log)
+        echo "/tmp/airupnp-arm.log"
         exit 0
         ;;
     *)
