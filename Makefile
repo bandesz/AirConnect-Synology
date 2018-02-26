@@ -21,7 +21,7 @@ target/scripts: target
 	cp -a scripts target
 
 target/LICENSE: target
-	cp LICENSE target/LICENSE
+	curl -s -L https://github.com/philippe44/AirConnect/raw/${REPO_REVISION}/LICENSE -o target/LICENSE
 
 target/INFO: target
 	$(if ${INFO_ARCH},,$(error Must specify INFO_ARCH))
