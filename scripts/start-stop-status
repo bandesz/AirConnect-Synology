@@ -13,10 +13,15 @@ start_airconnect ()
     set +e
     IP=$(/sbin/ifconfig lbr0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')
     if [ -z "$IP" ]; then
-        echo "Failed to get IP address from lbr0 interface" > ${SYNOPKG_TEMP_LOGFILE}
+        IP=$(/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')
+    fi
+
+    if [ -z "$IP" ]; then
+        echo "Failed to get IP address from lbr0/eth0 interfaces" > ${SYNOPKG_TEMP_LOGFILE}
         exit 1
     fi
     set -e
+
     PORT=49154
 
     su airconnect -s /bin/sh -c "${AIRCONNECT_DIR}/airupnp -b ${IP}:${PORT} -z -l 1000:2000 -f ${LOGFILE} -d all=error" >> ${LOGFILE} 2>&1
