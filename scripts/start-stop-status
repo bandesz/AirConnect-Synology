@@ -15,6 +15,9 @@ start_airconnect ()
     if [ -z "$IP" ]; then
         IP=$(/sbin/ifconfig eth0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')
     fi
+    if [ -z "$IP" ]; then
+        IP=$(/sbin/ifconfig bond0 | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')
+    fi
 
     if [ -z "$IP" ]; then
         echo "Failed to get IP address from lbr0/eth0 interfaces" > ${SYNOPKG_TEMP_LOGFILE}
