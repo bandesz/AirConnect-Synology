@@ -20,7 +20,7 @@ start_airconnect ()
     fi
 
     if [ -z "$IP" ]; then
-        echo "Failed to get IP address from lbr0/eth0 interfaces" > ${SYNOPKG_TEMP_LOGFILE}
+        echo "Failed to get IP address from lbr0/eth0/bond0 interfaces" > ${SYNOPKG_TEMP_LOGFILE}
         exit 1
     fi
     set -e
