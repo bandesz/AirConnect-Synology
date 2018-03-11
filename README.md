@@ -28,12 +28,17 @@ airupnp -b [router local ip]:49154 -z -l 1000:2000 -f /tmp/airupnp.log -d all=er
 
 The process is running with a low-privilege user.
 
-The router IP is currently fetched from the lbr0 interface which might not exist on certain devices. If this is the case you will get an error message during the install. Please open an issue and include the list of interfaces your device has and which one is bound to your local network.
+The router's local IP is automatically fetched from the interface list. The start script looks for the first 10.* IP address. If there is none it falls back to the first 192.168.* address.
 
 ## Build
 
+Optionally run shellcheck:
 ```
-make build-all
+make shellcheck
+```
+
+```
+make clean build-all
 ```
 
 Build a package for only one architecture:

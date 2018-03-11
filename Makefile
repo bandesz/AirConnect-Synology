@@ -67,3 +67,7 @@ clean-dist:
 .PHONY: build-all
 build-all: clean-dist
 	./build.sh
+
+.PHONY: shellcheck
+shellcheck:
+	shellcheck -s sh scripts/*
