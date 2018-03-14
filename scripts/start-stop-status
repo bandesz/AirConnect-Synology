@@ -10,10 +10,10 @@ start_airconnect ()
     touch "${logfile}"
     chown airconnect:users "${logfile}"
 
-    ips=$(ifconfig -a | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*' | grep -v "127.0.0.1")
+    ips=$(ifconfig -a | grep 'Ethernet' -A 1 | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*')
 
     if [ -z "$ips" ]; then
-        echo "Failed to get IP addresses" > "${SYNOPKG_TEMP_LOGFILE}"
+        echo "Failed to get the Ethernet interfaces" > "${SYNOPKG_TEMP_LOGFILE}"
         exit 1
     fi
 
