@@ -1,5 +1,5 @@
 package="AirConnect"
-version=0.2.0.4
+version=0.2.0.5
 description="Use AirPlay to stream to UPnP/Sonos"
 maintainer="philippe44"
 maintainer_url="https://github.com/philippe44/AirConnect"
