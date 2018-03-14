@@ -14,10 +14,6 @@ You can check which architecture you have [here](https://www.synology.com/en-uk/
 
 For the Synology Routers you should use the ARM version.
 
-## Tested devices
-
-* Synology RT2600 router
-
 ## How it works
 
 It runs the airupnp process with the following options:
@@ -28,14 +24,17 @@ airupnp -b [router local ip]:49154 -z -l 1000:2000 -f /tmp/airupnp.log -d all=er
 
 The process is running with a low-privilege user.
 
-The router's local IP is automatically fetched from the interface list. The start script looks for the first 10.* IP address. If there is none it falls back to the first 192.168.* address.
+The router's local IP is automatically fetched from the Ethernet interface list. The start script looks for the first 10.* IP address. If there is none it falls back to the first 192.168.* address.
 
 ## Build
 
 Optionally run shellcheck:
+
 ```
 make shellcheck
 ```
+
+Build packages for all architectures:
 
 ```
 make clean build-all
