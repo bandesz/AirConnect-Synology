@@ -24,7 +24,19 @@ airupnp -b [router local ip]:49154 -z -l 1000:2000 -f /tmp/airupnp.log -d all=er
 
 The process is running with a low-privilege user.
 
-The router's local IP is automatically fetched from the Ethernet interface list. The start script looks for the first 10.* IP address. If there is none it falls back to the first 192.168.* address.
+The router's local IP is automatically fetched from the Ethernet interface list. The start script looks for the first 192.168.* IP address. If the airupnp process doesn't start up on that interface (based on the logs) it will try on the first 10.* IP address. For this to work you should have at least one UPnP/Sonos device on your network.
+
+If AirConnect won't start up you can modify the `scripts/start-stop-status` script, set your own local IP and build your own package. Look for the following lines:
+
+```
+# If you want to start the airupnp process on a custom IP please uncomment the following lines
+# and set your own local IP address:
+#
+# start_airupnp "1.2.3.4" || true
+# return  0
+```
+
+Alternatively you can open an issue ticket and include your network interface list and your local IP.
 
 ## Build
 
