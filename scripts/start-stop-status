@@ -15,7 +15,7 @@ start_airupnp ()
     su airconnect -s /bin/sh -c "${AIRCONNECT_DIR}/airupnp -b ${ip}:${port} -z -l 1000:2000 -f ${logfile} -d all=error -d main=info" >> ${logfile} 2>&1
 
     cnt=0
-    while [ $cnt -lt 5 ]; do
+    while [ $cnt -lt 3 ]; do
         if grep -q "adding renderer" ${logfile}; then
             return 0
         fi
@@ -31,35 +31,35 @@ start_airconnect ()
     chown airconnect:users "${logfile}"
     true > $logfile
 
-    # If you want to start the airupnp process on a custom IP please uncomment the following lines
+    # If you want to start the airupnp process on a specific IP please uncomment the following lines
     # and set your own local IP address:
     #
     # start_airupnp "1.2.3.4" || true
     # return  0
 
-    ips=$(ifconfig -a | grep 'Ethernet' -A 1 | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*')
+    interfaces=$(ifconfig -a | grep 'Ethernet' -A 1 | grep -E 'inet (addr:)?(192\.168\.|10\.)' -B 1 | grep 'Ethernet' | grep -v "lbr0" | cut -d ' ' -f 1)
 
-    if [ -z "$ips" ]; then
-        echo "Failed to get the Ethernet interfaces" > "${SYNOPKG_TEMP_LOGFILE}"
+    if [ -z "$interfaces" ]; then
+        echo "Failed to get local Ethernet interfaces" > "${SYNOPKG_TEMP_LOGFILE}"
         exit 1
     fi
 
-    started=0
-    ip=$(echo "${ips}" | grep -E "^192\\.168\\." | head -n 1)
-    if [ -n "$ip" ]; then
-        if start_airupnp "$ip"; then
-            started=1
-        else
-            killall -15 airupnp
-        fi
-    fi
+    # Try lbr0 interface first if exists
+    interfaces="lbr0 $interfaces"
 
-    if [ $started != 1 ]; then
-        ip=$(echo "${ips}" | grep -E "^10\\." | head -n 1)
+    for interface in $interfaces; do
+        ip=$(/sbin/ifconfig "$interface" | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')
         if [ -n "$ip" ]; then
-            start_airupnp "$ip" || true
+            if start_airupnp "$ip"; then
+                return 0
+            else
+                killall -15 airupnp
+            fi
         fi
-    fi
+    done
+
+    echo "Failed to start airupnp on any of the local interfaces, please make sure you have at least one UPnP/Sonos device on your network" > "${SYNOPKG_TEMP_LOGFILE}"
+    exit 1
 }
 
 stop_airconnect ()
