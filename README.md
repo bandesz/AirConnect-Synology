@@ -24,12 +24,13 @@ airupnp -b [router local ip]:49154 -z -l 1000:2000 -f /tmp/airupnp.log -d all=er
 
 The process is running with a low-privilege user.
 
-The router's local IP is automatically fetched from the Ethernet interface list. The start script looks for the first 192.168.* IP address. If the airupnp process doesn't add any device (based on the logs) it will try on the first 10.* IP address. For the automatic IP discovery to work you should have at least one UPnP/Sonos device on your network.
+The airupnp process will only recognise your devices if it's bound to the appropriate local network IP, but as there are various Synology devices and network setups this is not trivial.
+The start script will check all your local network interfaces (with ip 192.168.* or 10.*) and checks if the airupnp process adds any devices (based on the logs). It there are no devices added in 3 seconds it will try the next interface. For the automatic IP discovery to work you should have at least one UPnP/Sonos device on your network.
 
-If AirConnect won't start up you can modify the `scripts/start-stop-status` script, set your own local IP and build your own package. Look for the following lines:
+If the start script is not able to find the right IP automatically you can fix it in `scripts/start-stop-status` by setting your own local IP and building your own package. Look for the following lines:
 
 ```
-# If you want to start the airupnp process on a custom IP please uncomment the following lines
+# If you want to start the airupnp process on a specific IP please uncomment the following lines
 # and set your own local IP address:
 #
 # start_airupnp "1.2.3.4" || true
