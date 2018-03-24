@@ -49,21 +49,16 @@ start_airconnect ()
     if [ -n "$ip" ]; then
         if start_airupnp "$ip"; then
             started=1
+        else
+            killall -15 airupnp
         fi
     fi
 
     if [ $started != 1 ]; then
         ip=$(echo "${ips}" | grep -E "^10\\." | head -n 1)
         if [ -n "$ip" ]; then
-            if start_airupnp "$ip"; then
-                started=1
-            fi
+            start_airupnp "$ip" || true
         fi
-    fi
-
-    if [ $started != 1 ]; then
-        echo "Failed to start airupnp on any of the Ethernet interfaces (10.* or 192.168.*)" > "${SYNOPKG_TEMP_LOGFILE}"
-        exit 1
     fi
 }
 
