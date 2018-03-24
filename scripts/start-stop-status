@@ -39,13 +39,20 @@ stop_airconnect ()
 
 airconnect_status ()
 {
-    # shellcheck disable=SC2009
-    if ! ps | grep airupnp | grep -v -q grep
-    then
-        return 1
+    # Check if ps has ax options
+    if ps ax >/dev/null 2>&1; then
+        # shellcheck disable=SC2009
+        if ! ps ax | grep airupnp | grep -v -q grep; then
+            return 1
+        fi
     else
-        return 0
+        # shellcheck disable=SC2009
+        if ! ps | grep airupnp | grep -v -q grep; then
+            return 1
+        fi
     fi
+
+    return 0
 }
 
 case $1 in
