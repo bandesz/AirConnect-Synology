@@ -31,6 +31,12 @@ start_airconnect ()
     chown airconnect:users "${logfile}"
     true > $logfile
 
+    # If you want to start the airupnp process on a custom IP please uncomment the following lines
+    # and set your own local IP address:
+    #
+    # start_airupnp "1.2.3.4" || true
+    # return  0
+
     ips=$(ifconfig -a | grep 'Ethernet' -A 1 | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*')
 
     if [ -z "$ips" ]; then
