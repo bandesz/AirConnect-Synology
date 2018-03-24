@@ -4,11 +4,32 @@ set -eu
 
 AIRCONNECT_DIR="/var/packages/AirConnect/target"
 
+logfile=/tmp/airupnp.log
+
+start_airupnp ()
+{
+    ip="$1"
+    port=49154
+    echo "[$(date +'%T')] Starting airupnp on ${ip}:${port}" >> ${logfile}
+
+    su airconnect -s /bin/sh -c "${AIRCONNECT_DIR}/airupnp -b ${ip}:${port} -z -l 1000:2000 -f ${logfile} -d all=error -d main=info" >> ${logfile} 2>&1
+
+    cnt=0
+    while [ $cnt -lt 5 ]; do
+        if grep -q "adding renderer" ${logfile}; then
+            return 0
+        fi
+        cnt=$((cnt + 1))
+        sleep 1
+    done
+    return 1
+}
+
 start_airconnect ()
 {
-    logfile=/tmp/airupnp.log
     touch "${logfile}"
     chown airconnect:users "${logfile}"
+    true > $logfile
 
     ips=$(ifconfig -a | grep 'Ethernet' -A 1 | grep -Eo 'inet (addr:)?([0-9]*\.){3}[0-9]*' | grep -Eo '([0-9]*\.){3}[0-9]*')
 
@@ -17,19 +38,27 @@ start_airconnect ()
         exit 1
     fi
 
-    ip=$(echo "${ips}" | grep -E "^10\\." | head -n 1)
-    if [ -z "${ip}" ]; then
-        ip=$(echo "${ips}" | grep -E "^192\\.168\\." | head -n 1)
+    started=0
+    ip=$(echo "${ips}" | grep -E "^192\\.168\\." | head -n 1)
+    if [ -n "$ip" ]; then
+        if start_airupnp "$ip"; then
+            started=1
+        fi
     fi
-    if [ -z "${ip}" ]; then
-        echo "Failed to get local IP address (10.* or 192.168.*)" > "${SYNOPKG_TEMP_LOGFILE}"
+
+    if [ $started != 1 ]; then
+        ip=$(echo "${ips}" | grep -E "^10\\." | head -n 1)
+        if [ -n "$ip" ]; then
+            if start_airupnp "$ip"; then
+                started=1
+            fi
+        fi
+    fi
+
+    if [ $started != 1 ]; then
+        echo "Failed to start airupnp on any of the Ethernet interfaces (10.* or 192.168.*)" > "${SYNOPKG_TEMP_LOGFILE}"
         exit 1
     fi
-
-    port=49154
-    echo "[$(date +'%T')] Starting airupnp on ${ip}:${port}" >> ${logfile}
-
-    su airconnect -s /bin/sh -c "${AIRCONNECT_DIR}/airupnp -b ${ip}:${port} -z -l 1000:2000 -f ${logfile} -d all=error" >> ${logfile} 2>&1
 }
 
 stop_airconnect ()
