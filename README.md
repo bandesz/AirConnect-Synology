@@ -19,7 +19,7 @@ For the Synology Routers you should use the ARM version.
 It runs the airupnp process with the following options:
 
 ```
-airupnp -b [router local ip]:49154 -z -l 1000:2000 -f /tmp/airupnp.log -d all=error
+airupnp -b [router local ip]:49154 -z -l 1000:2000 -f /tmp/airupnp.log -d all=error -d main=info
 ```
 
 The process is running with a low-privilege user.
