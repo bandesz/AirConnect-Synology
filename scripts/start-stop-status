@@ -27,9 +27,9 @@ start_airupnp ()
 
 start_airconnect ()
 {
+    rm -f "${logfile}"
     touch "${logfile}"
     chown airconnect:users "${logfile}"
-    true > $logfile
 
     # If you want to start the airupnp process on a specific IP please uncomment the following lines
     # and set your own local IP address:
