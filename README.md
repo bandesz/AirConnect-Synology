@@ -5,6 +5,10 @@
 A minimal Synology package for [AirConnect](https://github.com/philippe44/AirConnect
 ). It allows you to use AirPlay to stream to UPnP/Sonos devices.
 
+## How to install
+
+### Download the pre-built Synology package
+
 You can find the available packages under [Releases](https://github.com/bandesz/AirConnect-Synology/releases) for three different architecture groups:
  * **ARMv7**: ipq806x armada370 armadaxp armada375 armada38x alpine alpine4k monaco comcerto2k
  * **Intel - 32-bit**: x86 cedarview bromolow evansport avoton braswell broadwell apollolake
@@ -13,6 +17,16 @@ You can find the available packages under [Releases](https://github.com/bandesz/
 You can check which architecture you have [here](https://www.synology.com/en-uk/knowledgebase/DSM/tutorial/General/What_kind_of_CPU_does_my_NAS_have).
 
 For the Synology Routers you should use the ARM version.
+
+### Install in Package Center
+
+Open the Package Center app.
+
+As this package is not an official Synology package you may have to allow packages from any publisher. Go to Settings and set the Trust Level to "Any publisher".
+
+Click on Manual Install and upload the package you just downloaded.
+
+Don't forget to change back the Trust level to "Synology Inc." for additional security.
 
 ## How it works
 
