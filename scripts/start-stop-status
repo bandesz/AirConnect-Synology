@@ -15,7 +15,7 @@ start_airupnp ()
     su airconnect -s /bin/sh -c "${AIRCONNECT_DIR}/airupnp -b ${ip}:${port} -z -l 1000:2000 -f ${logfile} -d all=error -d main=info" >> ${logfile} 2>&1
 
     cnt=0
-    while [ $cnt -lt 3 ]; do
+    while [ $cnt -lt 5 ]; do
         if grep -q "adding renderer" ${logfile}; then
             return 0
         fi
