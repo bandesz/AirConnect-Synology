@@ -37,7 +37,7 @@ start_airconnect ()
     # start_airupnp "1.2.3.4" || true
     # return  0
 
-    interfaces=$(ifconfig -a | grep 'Ethernet' -A 1 | grep -E 'inet (addr:)?(192\.168\.|10\.)' -B 1 | grep 'Ethernet' | grep -v "lbr0" | cut -d ' ' -f 1)
+    interfaces=$(ifconfig -a | grep 'Ethernet' -A 1 | grep -E 'inet (addr:)?(192\.168\.|10\.|172\.(?:1[6-9]|2[0-9]|3[01]))' -B 1 | grep 'Ethernet' | grep -v "lbr0" | cut -d ' ' -f 1)
 
     if [ -z "$interfaces" ]; then
         echo "Failed to get local Ethernet interfaces" > "${SYNOPKG_TEMP_LOGFILE}"

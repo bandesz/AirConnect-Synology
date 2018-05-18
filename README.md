@@ -39,7 +39,7 @@ airupnp -b [router local ip]:49154 -z -l 1000:2000 -f /tmp/airupnp.log -d all=er
 The process is running with a low-privilege user.
 
 The airupnp process will only recognise your devices if it's bound to the appropriate local network IP, but as there are various Synology devices and network setups this is not trivial.
-The start script will check all your local network interfaces (with ip 192.168.* or 10.*) and checks if the airupnp process adds any devices (based on the logs). It there are no devices added in 3 seconds it will try the next interface. For the automatic IP discovery to work you should have at least one UPnP/Sonos device on your network.
+The start script will check all your local network interfaces (with ip 192.168.* or 10.* or 172.16.* - 172.31.*) and checks if the airupnp process adds any devices (based on the logs). It there are no devices added in 3 seconds it will try the next interface. For the automatic IP discovery to work you should have at least one UPnP/Sonos device on your network.
 
 If the start script is not able to find the right IP automatically you can fix it in `scripts/start-stop-status` by setting your own local IP and building your own package. Look for the following lines:
 
