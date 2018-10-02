@@ -11,8 +11,10 @@ start_airupnp ()
     ip="$1"
     port=49154
     echo "[$(date +'%T')] Starting airupnp on ${ip}:${port}" >> ${logfile}
-
     su airconnect -s /bin/sh -c "${AIRCONNECT_DIR}/airupnp -b ${ip}:${port} -z -l 1000:2000 -f ${logfile} -d all=error -d main=info" >> ${logfile} 2>&1
+
+    echo "[$(date +'%T')] Starting aircast on ${ip}" >> ${logfile}
+    su airconnect -s /bin/sh -c "${AIRCONNECT_DIR}/aircast -b ${ip} -z -l 1000:2000 -f ${logfile} -d all=error -d main=info" >> ${logfile} 2>&1
 
     cnt=0
     while [ $cnt -lt 5 ]; do
@@ -37,7 +39,7 @@ start_airconnect ()
     # start_airupnp "1.2.3.4" || true
     # return  0
 
-    interfaces=$(ifconfig -a | grep 'Ethernet' -A 1 | grep -E 'inet (addr:)?(192\.168\.|10\.|172\.(1[6-9]|2[0-9]|3[01])\.)' -B 1 | grep 'Ethernet' | grep -v "lbr0" | cut -d ' ' -f 1)
+    interfaces=$(ifconfig -a | grep 'Ethernet' -A 1 | grep -E 'inet (addr:)?(192\.168\.|10\.|172\.(1[6-9]|2[0-9]|3[01])\.)' -B 1 | grep 'Ethernet' | grep -v "lbr0" | grep -v "docker" | cut -d ' ' -f 1)
 
     if [ -z "$interfaces" ]; then
         echo "Failed to get local Ethernet interfaces" > "${SYNOPKG_TEMP_LOGFILE}"
@@ -54,6 +56,7 @@ start_airconnect ()
                 return 0
             else
                 killall -15 airupnp
+                killall -15 aircast
             fi
         fi
     done
@@ -65,6 +68,7 @@ start_airconnect ()
 stop_airconnect ()
 {
     killall -15 airupnp
+    killall -15 aircast
 }
 
 airconnect_status ()
@@ -72,12 +76,12 @@ airconnect_status ()
     # Check if ps has ax options
     if ps ax >/dev/null 2>&1; then
         # shellcheck disable=SC2009
-        if ! ps ax | grep airupnp | grep -v -q grep; then
+        if ! ps ax | grep -E 'airupnp|aircast' | grep -v -q grep; then
             return 1
         fi
     else
         # shellcheck disable=SC2009
-        if ! ps | grep airupnp | grep -v -q grep; then
+        if ! ps | grep -E 'airupnp|aircast' | grep -v -q grep; then
             return 1
         fi
     fi
