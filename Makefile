@@ -1,6 +1,4 @@
-REPO_REVISION=a9a837059135a3d6b075f394fdb10439415405d3
 REPO_REVISION=20fab815f075645cdb7f320f5addbc1790b18dff
-VERSION=0.2.0.8-$(shell date '+%Y%m%d')
 VERSION=0.2.2.1-$(shell date '+%Y%m%d')
 
 LICENSE:
@@ -32,8 +30,8 @@ target/INFO: target
 	$(if ${INFO_FIRMWARE},,$(error Must specify INFO_FIRMWARE))
 	cp INFO target/INFO
 	sed -i -e 's/#VERSION#/${VERSION}/' target/INFO
-	sed -i  -e 's/#INFO_ARCH#/${INFO_ARCH}/' target/INFO
-	sed -i  -e 's/#INFO_FIRMWARE#/${INFO_FIRMWARE}/' target/INFO
+	sed -i -e 's/#INFO_ARCH#/${INFO_ARCH}/' target/INFO
+	sed -i -e 's/#INFO_FIRMWARE#/${INFO_FIRMWARE}/' target/INFO
 
 dist/AirConnect-${ARCH}-${VERSION}.spk: target/package.tgz target/scripts target/LICENSE target/INFO dist
 	$(if ${ARCH},,$(error Must specify ARCH))
