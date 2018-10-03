@@ -25,6 +25,9 @@ target/scripts: target
 target/LICENSE: target
 	curl -s -L https://github.com/philippe44/AirConnect/raw/${REPO_REVISION}/LICENSE -o target/LICENSE
 
+target/PACKAGE_ICON.PNG: target
+	cp PACKAGE_ICON.PNG target/PACKAGE_ICON.PNG
+
 target/INFO: target
 	$(if ${INFO_ARCH},,$(error Must specify INFO_ARCH))
 	$(if ${INFO_FIRMWARE},,$(error Must specify INFO_FIRMWARE))
@@ -33,7 +36,7 @@ target/INFO: target
 	sed -i -e 's/#INFO_ARCH#/${INFO_ARCH}/' target/INFO
 	sed -i -e 's/#INFO_FIRMWARE#/${INFO_FIRMWARE}/' target/INFO
 
-dist/AirConnect-${ARCH}-${VERSION}.spk: target/package.tgz target/scripts target/LICENSE target/INFO dist
+dist/AirConnect-${ARCH}-${VERSION}.spk: target/package.tgz target/scripts target/LICENSE target/INFO target/PACKAGE_ICON.PNG dist
 	$(if ${ARCH},,$(error Must specify ARCH))
 	cd target && tar -czf AirConnect-${ARCH}-${VERSION}.spk *
 	mv target/AirConnect-${ARCH}-${VERSION}.spk dist/
