@@ -11,6 +11,7 @@ A minimal Synology package for [AirConnect](https://github.com/philippe44/AirCon
 
 You can find the available packages under [Releases](https://github.com/bandesz/AirConnect-Synology/releases) for three different architecture groups:
  * **ARMv7**: ipq806x armada370 armadaxp armada375 armada38x alpine alpine4k monaco comcerto2k
+ * **ARMv8**: rtd1296
  * **Intel - 32-bit**: x86 cedarview bromolow evansport avoton braswell broadwell apollolake
  * **Intel - 64-bit (DSM 6.0+)**: x86_6
 
