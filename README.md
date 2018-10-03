@@ -3,7 +3,7 @@
 [![Latest release](https://img.shields.io/github/release/bandesz/AirConnect-Synology.svg)](https://github.com/bandesz/AirConnect-Synology/releases/latest)
 
 A minimal Synology package for [AirConnect](https://github.com/philippe44/AirConnect
-). It allows you to use AirPlay to stream to UPnP/Sonos devices.
+). It allows you to use AirPlay to stream to UPnP/Sonos & Chromecast devices.
 
 ## How to install
 
@@ -30,28 +30,31 @@ Don't forget to change back the Trust level to "Synology Inc." for additional se
 
 ## How it works
 
-It runs the airupnp process with the following options:
+It runs the AirConnect processes with the following options:
 
 ```
 airupnp -b [router local ip]:49154 -z -l 1000:2000 -f /tmp/airupnp.log -d all=error -d main=info
+
+aircast -b [router local ip] -z -l 1000:2000 -f /tmp/aircast.log -d all=error -d main=info
+
 ```
 
 The process is running with a low-privilege user.
 
-The airupnp process will only recognise your devices if it's bound to the appropriate local network IP, but as there are various Synology devices and network setups this is not trivial.
-The start script will check all your local network interfaces (with ip 192.168.* or 10.* or 172.16.* - 172.31.*) and checks if the airupnp process adds any devices (based on the logs). It there are no devices added in 3 seconds it will try the next interface. For the automatic IP discovery to work you should have at least one UPnP/Sonos device on your network.
+The processes will only recognise your devices if they are bound to the appropriate local network IP, but this is not trivial as there are various Synology devices and network setups.
+The start script will check all your local network interfaces (with ip 192.168.* or 10.* or 172.16.* - 172.31.*) and checks if the airupnp/aircast processes add any devices (based on the logs). It there are no devices added in 5 seconds it will try the next interface. For the automatic IP discovery to work you should have at least one UPnP/Sonos/Chromecast device on your network.
 
 If the start script is not able to find the right IP automatically you can fix it in `scripts/start-stop-status` by setting your own local IP and building your own package. Look for the following lines:
 
 ```
-# If you want to start the airupnp process on a specific IP please uncomment the following lines
+# If you want to start the airconnect processes on a specific IP please uncomment the following lines
 # and set your own local IP address:
 #
-# start_airupnp "1.2.3.4" || true
+# start_airconnect_on_ip "1.2.3.4" || true
 # return  0
 ```
 
-Alternatively you can open an issue ticket and include your network interface list and your local IP.
+Alternatively you can open an issue and include your network interface list and your local IP.
 
 ## Build
 

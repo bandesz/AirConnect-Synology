@@ -4,9 +4,9 @@ set -eu
 
 AIRCONNECT_DIR="/var/packages/AirConnect/target"
 
-logfile=/tmp/airupnp.log
+logfile=/tmp/airconnect.log
 
-start_airupnp ()
+start_airconnect_on_ip ()
 {
     ip="$1"
     port=49154
@@ -33,10 +33,10 @@ start_airconnect ()
     touch "${logfile}"
     chown airconnect:users "${logfile}"
 
-    # If you want to start the airupnp process on a specific IP please uncomment the following lines
+    # If you want to start the airconnect processes on a specific IP please uncomment the following lines
     # and set your own local IP address:
     #
-    # start_airupnp "1.2.3.4" || true
+    # start_airconnect_on_ip "1.2.3.4" || true
     # return  0
 
     interfaces=$(ifconfig -a | grep 'Ethernet' -A 1 | grep -E 'inet (addr:)?(192\.168\.|10\.|172\.(1[6-9]|2[0-9]|3[01])\.)' -B 1 | grep 'Ethernet' | grep -v "lbr0" | grep -v "docker" | cut -d ' ' -f 1)
@@ -52,16 +52,15 @@ start_airconnect ()
     for interface in $interfaces; do
         ip=$(/sbin/ifconfig "$interface" | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}')
         if [ -n "$ip" ]; then
-            if start_airupnp "$ip"; then
+            if start_airconnect_on_ip "$ip"; then
                 return 0
             else
-                killall -15 airupnp
-                killall -15 aircast
+                stop_airconnect
             fi
         fi
     done
 
-    echo "Failed to start airupnp on any of the local interfaces, please make sure you have at least one UPnP/Sonos device on your network" > "${SYNOPKG_TEMP_LOGFILE}"
+    echo "Failed to start AirConnect on any of the local interfaces, please make sure you have at least one UPnP/Sonos/Chromecast device on your network" > "${SYNOPKG_TEMP_LOGFILE}"
     exit 1
 }
 
@@ -111,7 +110,7 @@ case $1 in
         fi
         ;;
     log)
-        echo "/tmp/airupnp.log"
+        echo "${logfile}"
         exit 0
         ;;
     *)
