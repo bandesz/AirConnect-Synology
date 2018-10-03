@@ -32,9 +32,10 @@ target/INFO: target
 	$(if ${INFO_ARCH},,$(error Must specify INFO_ARCH))
 	$(if ${INFO_FIRMWARE},,$(error Must specify INFO_FIRMWARE))
 	cp INFO target/INFO
-	sed -i -e 's/#VERSION#/${VERSION}/' target/INFO
-	sed -i -e 's/#INFO_ARCH#/${INFO_ARCH}/' target/INFO
-	sed -i -e 's/#INFO_FIRMWARE#/${INFO_FIRMWARE}/' target/INFO
+	sed -i.bak -e 's/#VERSION#/${VERSION}/' target/INFO
+	sed -i.bak -e 's/#INFO_ARCH#/${INFO_ARCH}/' target/INFO
+	sed -i.bak -e 's/#INFO_FIRMWARE#/${INFO_FIRMWARE}/' target/INFO
+	rm target/INFO.bak
 
 dist/AirConnect-${ARCH}-${VERSION}.spk: target/package.tgz target/scripts target/LICENSE target/INFO target/PACKAGE_ICON.PNG dist
 	$(if ${ARCH},,$(error Must specify ARCH))
