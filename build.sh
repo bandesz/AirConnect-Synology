@@ -2,7 +2,7 @@
 
 set -euo pipefail
 
-ARCH_LIST="arm x86 x86-64"
+ARCH_LIST="arm aarch64 x86 x86-64"
 
 for arch in ${ARCH_LIST}; do
   export ARCH=${arch}

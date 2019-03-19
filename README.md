@@ -13,7 +13,7 @@ You can find the available packages under [Releases](https://github.com/bandesz/
  * **ARMv7**: ipq806x armada370 armadaxp armada375 armada38x alpine alpine4k monaco comcerto2k
  * **ARMv8**: rtd1296
  * **Intel - 32-bit**: x86 cedarview bromolow evansport avoton braswell broadwell apollolake
- * **Intel - 64-bit (DSM 6.0+)**: x86_6
+ * **Intel - 64-bit (DSM 6.0+)**: x86_64
 
 You can check which architecture you have [here](https://www.synology.com/en-uk/knowledgebase/DSM/tutorial/General/What_kind_of_CPU_does_my_NAS_have).
 
@@ -77,7 +77,7 @@ Build a package for only one architecture:
 ARCH=arm make clean build
 ```
 
-Possible values for ARCH: arm, x86, x86-64
+Possible values for ARCH: arm, aarch64, x86, x86-64
 
 You can find the built packages in the dist directory.
 

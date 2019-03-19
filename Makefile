@@ -1,5 +1,5 @@
-REPO_REVISION=20fab815f075645cdb7f320f5addbc1790b18dff
-VERSION=0.2.2.1-$(shell date '+%Y%m%d')
+REPO_REVISION=6871b44b5735645eced8fa5737be4c349862b4b3
+VERSION=0.2.2.2-$(shell date '+%Y%m%d')
 
 LICENSE:
 	curl -s -L https://github.com/philippe44/AirConnect/raw/${REPO_REVISION}/LICENSE -O
@@ -44,7 +44,13 @@ dist/AirConnect-${ARCH}-${VERSION}.spk: target/package.tgz target/scripts target
 
 .PHONY: arm
 arm:
-	$(eval export INFO_ARCH=ipq806x armada370 armadaxp armada375 armada38x alpine alpine4k monaco comcerto2k rtd1296)
+	$(eval export INFO_ARCH=ipq806x armada370 armadaxp armada375 armada38x alpine alpine4k monaco comcerto2k)
+	$(eval export INFO_FIRMWARE=5.0-4458)
+	@true
+
+.PHONY: aarch64
+aarch64:
+	$(eval export INFO_ARCH=rtd1296)
 	$(eval export INFO_FIRMWARE=5.0-4458)
 	@true
 
