@@ -1,5 +1,5 @@
-REPO_REVISION=6871b44b5735645eced8fa5737be4c349862b4b3
-VERSION=0.2.8.0-$(shell date '+%Y%m%d')
+REPO_REVISION=06abcdf888c224df6ea2883480e155a468e5d3c7
+VERSION=0.2.10.2-$(shell date '+%Y%m%d')
 
 LICENSE:
 	curl -s -L https://github.com/philippe44/AirConnect/raw/${REPO_REVISION}/LICENSE -O
@@ -15,7 +15,7 @@ target/package.tgz: target
 	curl -s -L https://github.com/philippe44/AirConnect/raw/${REPO_REVISION}/bin/airupnp-${ARCH} -o target/airupnp
 	chmod +x target/airupnp
 	curl -s -L https://github.com/philippe44/AirConnect/raw/${REPO_REVISION}/bin/aircast-${ARCH} -o target/aircast
-	chmod +x target/aircast	
+	chmod +x target/aircast
 	cd target && tar czf package.tgz airupnp aircast
 	rm target/airupnp target/aircast
 
